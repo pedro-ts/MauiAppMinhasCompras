@@ -3,14 +3,13 @@ using System.Collections.ObjectModel;
 
 namespace MauiAppMinhasCompras.Views;
 
-public partial class ListaProduto : ContentPage
+public partial class Listar_produto_categoria : ContentPage
 {
     ObservableCollection<Produto> lista = new ObservableCollection<Produto>();
 
-    public ListaProduto()
+    public Listar_produto_categoria()
     {
         InitializeComponent();
-
         lst_produtos.ItemsSource = lista;
     }
 
@@ -51,7 +50,7 @@ public partial class ListaProduto : ContentPage
 
             lista.Clear();
 
-            List<Produto> tmp = await App.Db.Search_categoria(q);
+            List<Produto> tmp = await App.Db.Search(q);
 
             tmp.ForEach(i => lista.Add(i));
         }
@@ -98,7 +97,7 @@ public partial class ListaProduto : ContentPage
             bool confirm = await DisplayAlert(
                 "Tem Certeza?", $"Remover {p.Descricao}?", "Sim", "Não");
 
-            if(confirm)
+            if (confirm)
             {
                 await App.Db.Delete(p.Id);
                 lista.Remove(p);
